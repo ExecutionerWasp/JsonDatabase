@@ -1,6 +1,7 @@
 package com.json.database.domain;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @author Alvin
@@ -8,16 +9,13 @@ import java.io.Serializable;
 
 public class JsonEntityType<ID extends Long> implements Serializable {
 
-    private static long counter = 1;
-    private long id;
+    private long id = UUID.randomUUID().getMostSignificantBits();
 
     public JsonEntityType(ID id) {
         this.id = id;
     }
 
     public JsonEntityType() {
-        this.id = counter;
-        counter++;
     }
 
     public long getId() {

@@ -6,6 +6,7 @@ import com.json.database.util.StringWrap;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -36,16 +37,16 @@ public enum Database implements Repository {
     }
 
     @Override
-    public Optional<? extends JsonEntityType> save(Object entity) {
-        if (exists(((JsonEntityType) entity).getId())) {
+    public Optional<JsonEntityType> save(JsonEntityType entity) {
+        if (exists(entity.getId())) {
             delete(entity);
         }
         write(ReflectionService.buildJson(entity));
-        return Optional.of((JsonEntityType) entity);
+        return Optional.of(entity);
     }
 
     @Override
-    public Optional findOne(Long primaryKey) {
+    public Optional<? extends JsonEntityType> findOne(Long primaryKey) {
         List<? extends JsonEntityType> jsons = findAll();
         for (JsonEntityType t :
                 jsons) {
@@ -67,13 +68,12 @@ public enum Database implements Repository {
     }
 
     @Override
-    public void delete(Object entity) {
-        JsonEntityType obj = (JsonEntityType) entity;
-        if (exists(obj.getId())) {
+    public void delete(JsonEntityType entity) {
+        if (exists(entity.getId())) {
             List<? extends JsonEntityType> objects = findAll();
             Integer index = null;
             for (int i = 0; i < objects.size(); i++) {
-                if (obj.getId() == objects.get(i).getId()) {
+                if (entity.getId() == objects.get(i).getId()) {
                     index = i;
                 }
             }
@@ -81,7 +81,7 @@ public enum Database implements Repository {
                 objects.remove((int) index);
             }
             try {
-                Files.delete(this.databaseConfig.path());
+                Files.write(this.databaseConfig.path(), "".getBytes(), StandardOpenOption.CREATE_NEW);
                 if (objects.size() != 0)
                     objects.forEach(this::save);
             } catch (IOException e) {

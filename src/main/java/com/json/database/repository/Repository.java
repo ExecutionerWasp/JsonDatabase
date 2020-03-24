@@ -1,5 +1,7 @@
 package com.json.database.repository;
 
+import com.json.database.domain.JsonEntityType;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -7,17 +9,17 @@ import java.util.Optional;
  * @author Alvin
  **/
 
-public interface Repository<T> {
+public interface Repository<ID extends Long, T extends JsonEntityType<ID>> {
 
-    <S extends T> Optional<S> save(Object entity);
+    <S extends T> Optional<S> save(T entity);
 
-    Optional<T> findOne(Long primaryKey);
+    Optional<T> findOne(ID primaryKey);
 
     List<T> findAll();
 
-    Long count();
+    ID count();
 
     void delete(T entity);
 
-    boolean exists(Long primaryKey);
+    boolean exists(ID primaryKey);
 }

@@ -16,11 +16,12 @@ public class Application {
     public static void main(String[] args) {
 
         Database.EXECUTE.create(() -> User::new);
-        User user;
+        User user = new User("qwerty", "pass");
 
-        user = (User) Database.EXECUTE.save(new User("1", "pass")).get();
         Database.EXECUTE.save(new User("login", "pass"));
-        Database.EXECUTE.save(new User("qwerty", "pass"));
+        user.setId(7L);
+        Database.EXECUTE.save(user);
+        user = (User) Database.EXECUTE.save(new User("1", "pass")).get();
 
         System.out.println(Database.EXECUTE.findAll());
         System.out.println(Database.EXECUTE.count());
