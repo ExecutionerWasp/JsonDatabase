@@ -37,6 +37,9 @@ public enum Database implements Repository {
 
     @Override
     public Optional<? extends JsonEntityType> save(Object entity) {
+        if (exists(((JsonEntityType) entity).getId())) {
+            delete(entity);
+        }
         write(ReflectionService.buildJson(entity));
         return Optional.of((JsonEntityType) entity);
     }
