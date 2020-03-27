@@ -51,6 +51,10 @@ public class Log implements Serializable {
         log(Level.INFO, message, obj);
     }
 
+    public static void warn(String message, Throwable e) {
+        log(Level.WARNING, message);
+        log(Level.WARNING, e.getMessage());
+    }
     public static void warn(String message, Object... obj) {
         log(Level.WARNING, message, obj);
     }
@@ -58,13 +62,18 @@ public class Log implements Serializable {
     public static void error(String message, Object... obj) {
         log(Level.ERROR, message, obj);
     }
-
-    public static void error(Throwable throwable) {
-        log(Level.ERROR, throwable.getMessage());
+    public static void error(String message, Throwable e, Object... obj) {
+        log(Level.ERROR, message, obj);
+        log(Level.ERROR, e.getMessage());
     }
 
-    public static void error(String message, Throwable throwable) {
-        log(Level.ERROR, message, throwable.getMessage());
+    public static void error(Throwable e) {
+        log(Level.ERROR, e.getMessage());
+    }
+
+    public static void error(String message, Throwable e) {
+        log(Level.ERROR, message);
+        log(Level.ERROR, e.getMessage());
     }
 
     private static String message(Level level, String m) {
@@ -110,7 +119,11 @@ public class Log implements Serializable {
         builder
                 .append(ANSI_WHITE)
                 .append(LocalDate.now())
-                .append("  |  ")
+                .append("  ")
+                .append(ANSI_BLUE)
+                .append("|")
+                .append(ANSI_RESET)
+                .append("  ")
                 .append(LocalTime.now().withNano(0))
                 .append("\t")
                 .append(ANSI_RESET)
@@ -125,9 +138,16 @@ public class Log implements Serializable {
                 .append(RESET_BOLD)
                 .append(ANSI_WHITE)
                 .append(BOLD)
-                .append(":\t --- \t: ")
-                .append(RESET_BOLD)
+                .append(ANSI_BLUE)
+                .append(":\t")
                 .append(ANSI_RESET)
+                .append(ANSI_PURPLE)
+                .append(" --- ")
+                .append(ANSI_RESET)
+                .append(ANSI_BLUE)
+                .append("\t: ")
+                .append(ANSI_RESET)
+                .append(RESET_BOLD)
                 .append(m);
         return builder.toString();
     }
