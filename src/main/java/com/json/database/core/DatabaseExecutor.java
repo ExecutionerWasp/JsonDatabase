@@ -14,7 +14,7 @@ import java.util.Map;
 
 public interface DatabaseExecutor extends FileHandler {
 
-    DatabaseConfiguration config();
+    DatabaseConfiguration<?, ?> config();
 
     @Override
     default String type() {
@@ -23,12 +23,12 @@ public interface DatabaseExecutor extends FileHandler {
 
     @Override
     default String name() {
-        return config().instance().get().getClass().getSimpleName().toLowerCase();
+        return config().document();
     }
 
     @Override
     default Path path() {
-        return Path.of(config().url().concat(name()).concat(type()));
+        return Path.of(config().url().concat(config().document()).concat(type()));
     }
 
     default void init() {

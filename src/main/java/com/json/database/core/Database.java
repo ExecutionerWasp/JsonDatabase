@@ -24,7 +24,7 @@ public enum Database implements DatabaseExecutor {
 
             @Override
             public String document() {
-                return "document";
+                return instance().get().getClass().getSimpleName().toLowerCase();
             }
 
             @Override
