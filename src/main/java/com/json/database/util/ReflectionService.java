@@ -1,5 +1,6 @@
 package com.json.database.util;
 
+import com.json.database.exception.JsonEntityTypeNotFoundException;
 import com.json.database.domain.JsonEntityType;
 
 import java.lang.reflect.Field;
@@ -15,7 +16,11 @@ import java.util.stream.Stream;
  **/
 
 public final class ReflectionService {
+    private static long id = 1;
 
+    public static void setId(long id) {
+        ReflectionService.id = id;
+    }
 
     public static List<String> fields(Class<?> entity) {
         return Stream.of(entity.getFields())
@@ -23,9 +28,10 @@ public final class ReflectionService {
                 .collect(Collectors.toList());
     }
 
-    public static Map<String, Object> fieldValueMap(Object entity) {
+    private static Map<String, Object> fieldValueMap(Object entity) {
         final Map<String, Object> map = new HashMap<>();
-        final JsonEntityType jsonEntityType = (JsonEntityType) entity;
+        final JsonEntityType jsonEntityType = generateId((JsonEntityType) entity)
+                .orElseThrow(JsonEntityTypeNotFoundException::new);
         map.put("id", jsonEntityType.getId());
         Stream.of(entity.getClass().getDeclaredFields())
                 .peek(field -> field.setAccessible(true))
@@ -53,17 +59,15 @@ public final class ReflectionService {
         return StringWrap.OBJECT.wrap(json.toString());
     }
 
-    @Deprecated
-    public static <T extends JsonEntityType<?>> Optional<T> generateId(T obj) {
+    private static <T extends JsonEntityType> Optional<T> generateId(T obj) {
 
         try {
-            final Field idField = obj.getClass().getDeclaredField("id");
+            final Field idField = obj.getClass().getSuperclass().getDeclaredField("id");
             idField.setAccessible(true);
-            if (idField.getType().equals(Long.class)) {
-                idField.set(obj, UUID.randomUUID().timestamp());
-                idField.setAccessible(false);
-                return Optional.of(obj);
-            }
+            idField.set(obj, id);
+            id = id + 1;
+            idField.setAccessible(false);
+            return Optional.of(obj);
 //            if (idField.getType().equals(Integer.class)) {
 //                idField.set(obj, UUID.randomUUID().clockSequence());
 //                idField.setAccessible(false);
@@ -76,7 +80,6 @@ public final class ReflectionService {
 //            }
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
-            return Optional.empty();
         }
         return Optional.empty();
     }

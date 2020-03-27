@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class JsonEntityType<ID extends Long> implements Serializable {
 
-    private long id = UUID.randomUUID().getMostSignificantBits();
+    private long id;
 
     public JsonEntityType(ID id) {
         this.id = id;

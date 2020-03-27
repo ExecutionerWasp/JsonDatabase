@@ -33,6 +33,7 @@ public enum Database implements Repository {
             }
             return Boolean.TRUE;
         }
+        ReflectionService.setId(databaseConfig.id());
         return Boolean.FALSE;
     }
 

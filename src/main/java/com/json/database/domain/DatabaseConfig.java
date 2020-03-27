@@ -9,7 +9,6 @@ import java.util.function.Supplier;
 
 @FunctionalInterface
 public interface DatabaseConfig {
-
     Supplier<? extends JsonEntityType> createInstance();
 
     default String name() {
@@ -22,5 +21,9 @@ public interface DatabaseConfig {
 
     default Path path() {
         return Path.of(url());
+    }
+
+    default long id() {
+        return 0;
     }
 }
