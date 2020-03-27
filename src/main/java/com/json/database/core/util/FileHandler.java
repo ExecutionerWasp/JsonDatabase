@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Alvin
@@ -47,5 +52,22 @@ public interface FileHandler {
         else
             Files.write(this.path(), s.get().getBytes(), StandardOpenOption.WRITE);
         return true;
+    }
+
+    default Stream<String> read() throws IOException {
+        return Files.lines(this.path());
+    }
+
+    default Collection<String> read(Supplier<Collection<String>> collection) throws IOException {
+        return read().collect(Collectors.toCollection(collection));
+    }
+
+    default Optional<String> content() {
+        try {
+            return Optional.of(new String(Files.readAllBytes(this.path())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

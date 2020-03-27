@@ -2,10 +2,13 @@ package com.json.database.core;
 
 import com.json.database.core.util.FileHandler;
 import com.json.database.core.util.JsonBuilder;
+import com.json.database.core.util.JsonReaderService;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +35,6 @@ public interface DatabaseExecutor extends FileHandler {
     }
 
 
-
     default void init() {
         System.out.println("Creating database...");
         try {
@@ -53,10 +55,14 @@ public interface DatabaseExecutor extends FileHandler {
     default void clean() {
         System.out.println("Cleaning database...");
 
+        JsonReaderService<String> service = this::content;
+        service.extract("document");
     }
 
     default File export() {
         System.out.println("Exporting database...");
+
+
         return path().toFile();
     }
 

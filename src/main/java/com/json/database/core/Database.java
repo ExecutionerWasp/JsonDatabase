@@ -39,19 +39,4 @@ public enum Database implements DatabaseExecutor {
             }
         };
     }
-
-    @Override
-    public void clean() {
-
-    }
-
-    @Override
-    public File export() {
-        return null;
-    }
-
-    @Override
-    public void bring(File db) {
-
-    }
 }

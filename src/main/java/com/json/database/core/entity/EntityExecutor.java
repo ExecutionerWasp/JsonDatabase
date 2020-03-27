@@ -10,7 +10,9 @@ import java.util.stream.Stream;
 public interface EntityExecutor<ID extends Serializable, T extends Entity<ID>> {
 
     T save(T t);
+
     T find(ID id);
+
     void delete(ID id);
 
     Iterable<T> all();
