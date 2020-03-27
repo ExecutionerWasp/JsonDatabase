@@ -5,7 +5,9 @@ import java.lang.System.Logger.Level;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -13,6 +15,8 @@ import java.util.function.Function;
  **/
 
 public class Log implements Serializable {
+
+    private static final Set<String> sessionLogs = new HashSet<>();
 
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
@@ -30,9 +34,11 @@ public class Log implements Serializable {
     public static void log(String message, Object... obj) {
         List<Object> list = Arrays.asList(obj);
         if (list.isEmpty()) {
+            sessionLogs.add(message);
             System.out.println(message);
             return;
         }
+        sessionLogs.add(message);
         System.out.println();
         System.out.format(message.replaceAll("\\{}", "%s"), obj);
     }
@@ -124,5 +130,9 @@ public class Log implements Serializable {
                 .append(ANSI_RESET)
                 .append(m);
         return builder.toString();
+    }
+
+    public static Set<String> session() {
+        return sessionLogs;
     }
 }
