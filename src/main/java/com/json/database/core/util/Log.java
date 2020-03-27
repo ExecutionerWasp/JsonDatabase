@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Alvin
@@ -47,14 +48,33 @@ public class Log implements Serializable {
         log(message(level, message), obj);
     }
 
+    public static void info(Supplier<String> message, Object... obj) {
+        log(Level.INFO, message.get(), obj);
+    }
+
     public static void info(String message, Object... obj) {
         log(Level.INFO, message, obj);
+    }
+
+    public static void warn(String message, Supplier<Throwable> e) {
+        log(Level.WARNING, message);
+        log(Level.WARNING, e.get().getMessage());
     }
 
     public static void warn(String message, Throwable e) {
         log(Level.WARNING, message);
         log(Level.WARNING, e.getMessage());
     }
+
+    public static void warn(String message, Throwable e, Object... obj) {
+        log(Level.WARNING, message, obj);
+        log(Level.WARNING, e.getMessage());
+    }
+
+    public static void warn(String message, Supplier<Throwable> e, Object... obj) {
+        warn(message, e.get(), obj);
+    }
+
     public static void warn(String message, Object... obj) {
         log(Level.WARNING, message, obj);
     }
@@ -62,9 +82,18 @@ public class Log implements Serializable {
     public static void error(String message, Object... obj) {
         log(Level.ERROR, message, obj);
     }
+
+    public static void error(String message, Supplier<Throwable> e, Object... obj) {
+        error(message, e.get(), obj);
+    }
+
     public static void error(String message, Throwable e, Object... obj) {
         log(Level.ERROR, message, obj);
         log(Level.ERROR, e.getMessage());
+    }
+
+    public static void error(Supplier<Throwable> e) {
+        log(Level.ERROR, e.get().getMessage());
     }
 
     public static void error(Throwable e) {
@@ -74,6 +103,11 @@ public class Log implements Serializable {
     public static void error(String message, Throwable e) {
         log(Level.ERROR, message);
         log(Level.ERROR, e.getMessage());
+    }
+
+    public static void error(String message, Supplier<Throwable> e) {
+        log(Level.ERROR, message);
+        log(Level.ERROR, e.get().getMessage());
     }
 
     private static String message(Level level, String m) {

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
  * @author Alvin
  **/
 
-public interface EntityExecutor<ID extends Serializable, T extends Entity<ID>> {
+public interface Repository<T extends Entity<ID>, ID extends Serializable> {
 
     T save(T t);
 

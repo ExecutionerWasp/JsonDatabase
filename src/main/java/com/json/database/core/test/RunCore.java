@@ -1,6 +1,7 @@
 package com.json.database.core.test;
 
-import com.json.database.core.Database;
+
+import com.json.database.core.EmployeeDatabase;
 
 /**
  * @author Alvin
@@ -8,7 +9,6 @@ import com.json.database.core.Database;
 
 public class RunCore {
     public static void main(String[] args) {
-        Database.INSTANCE.init();
-        Database.INSTANCE.clean();
+        EmployeeDatabase.INSTANCE.save(new Employee(0L, "NAME"));
     }
 }

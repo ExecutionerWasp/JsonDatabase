@@ -3,6 +3,7 @@ package com.json.database.core;
 import com.json.database.core.entity.Entity;
 
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -15,7 +16,7 @@ public interface DatabaseConfiguration<T extends Entity<ID>, ID extends Serializ
 
     String document();
 
-    ID id();
+    Optional<ID> id();
 
     String url();
 }

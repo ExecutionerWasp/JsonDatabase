@@ -86,7 +86,7 @@ public enum Database implements Repository {
                 if (objects.size() != 0)
                     objects.forEach(this::save);
             } catch (IOException e) {
-                System.out.println("Database is not exists...");
+                System.out.println("DatabaseRepository is not exists...");
             }
         }
     }

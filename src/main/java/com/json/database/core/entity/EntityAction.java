@@ -7,5 +7,7 @@ package com.json.database.core.entity;
 public enum EntityAction {
     SAVE,
     FIND,
-    DELETE
+    DELETE;
+
+
 }
