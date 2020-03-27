@@ -38,13 +38,10 @@ public interface DatabaseExecutor extends FileHandler {
             String s = JsonBuilder.OBJECT.build(
                     Map.of(
                             "document", config().document(),
-                            "objects", JsonBuilder.LIST.build("asdasd", "asdas", "sldjfgn"),
-                            "last_generated_id", 908234
+                            "last_generated_id", 0,
+                            "objects", JsonBuilder.LIST.build()
                     ));
-            s = JsonBuilder.OBJECT.build(Map.of("objects", JsonBuilder.LIST.build(List.of(s,s,s,s,s))));
-            String res = s;
-            System.out.println(s);
-            write(() -> res);
+            write(() -> s);
         } catch (IOException e) {
             System.out.println("Fold...");
             e.printStackTrace();
