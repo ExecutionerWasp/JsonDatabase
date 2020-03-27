@@ -2,12 +2,13 @@ package com.json.database.core.util;
 
 import com.json.database.core.exception.JsonReaderIsEmptyException;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static com.json.database.core.util.Log.info;
 
 /**
  * @author Alvin
@@ -20,10 +21,10 @@ public interface JsonReaderService<J extends String> {
 
     default <O extends String> O extract(String key){
         J j = json().orElseThrow(JsonReaderIsEmptyException::new);
-
+        info("Extracting key: {}", key);
         if (Objects.nonNull(key)){
             List<String> keys = Arrays.asList(j.split(key));
-
+            info("Extracted keys: {}", key);
         }
         return (O) "";
     }

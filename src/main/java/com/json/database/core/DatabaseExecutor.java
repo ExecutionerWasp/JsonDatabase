@@ -7,9 +7,10 @@ import com.json.database.core.util.JsonReaderService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+
+import static com.json.database.core.util.Log.error;
+import static com.json.database.core.util.Log.info;
 
 /**
  * @author Alvin
@@ -36,7 +37,7 @@ public interface DatabaseExecutor extends FileHandler {
 
 
     default void init() {
-        System.out.println("Creating database...");
+        info("Creating database...");
         try {
             create();
             String s = JsonBuilder.OBJECT.of(
@@ -46,27 +47,25 @@ public interface DatabaseExecutor extends FileHandler {
                             "objects", JsonBuilder.LIST.of()
                     ));
             write(() -> s);
+            info("Created document: {}", config().document());
         } catch (IOException e) {
-            System.out.println("Fold...");
+            error("Fold...");
             e.printStackTrace();
         }
     }
 
     default void clean() {
-        System.out.println("Cleaning database...");
-
+        info("Cleaning database...");
         JsonReaderService<String> service = this::content;
         service.extract("document");
     }
 
     default File export() {
-        System.out.println("Exporting database...");
-
-
+        info("Exporting database...");
         return path().toFile();
     }
 
     default void bring(File db) {
-        System.out.println("Importing database...");
+        info("Importing database...");
     }
 }

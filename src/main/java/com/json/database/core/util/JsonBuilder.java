@@ -1,8 +1,11 @@
 package com.json.database.core.util;
 
-import com.json.database.core.exception.JsonBuilderTypeNotFoundExceptioin;
+import com.json.database.core.exception.JsonBuilderTypeNotFoundException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -29,7 +32,7 @@ public enum JsonBuilder implements JsonBuilderService {
             case LIST:
                 return of(list);
         }
-        throw new JsonBuilderTypeNotFoundExceptioin(obj.getClass());
+        throw new JsonBuilderTypeNotFoundException(obj.getClass());
     }
 
     @Override
@@ -45,6 +48,6 @@ public enum JsonBuilder implements JsonBuilderService {
                     return this.action.apply(obj);
                 }
         }
-        throw new JsonBuilderTypeNotFoundExceptioin(obj.getClass());
+        throw new JsonBuilderTypeNotFoundException(obj.getClass());
     }
 }

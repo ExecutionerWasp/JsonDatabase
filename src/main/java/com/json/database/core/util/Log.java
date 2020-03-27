@@ -39,8 +39,8 @@ public class Log implements Serializable {
             return;
         }
         sessionLogs.add(message);
-        System.out.println();
         System.out.format(message.replaceAll("\\{}", "%s"), obj);
+        System.out.println();
     }
 
     public static void log(Level level, String message, Object... obj) {

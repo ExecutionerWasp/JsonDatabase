@@ -1,6 +1,6 @@
 package com.json.database.core.util;
 
-import com.json.database.core.exception.JsonBuilderTypeNotFoundExceptioin;
+import com.json.database.core.exception.JsonBuilderTypeNotFoundException;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public interface JsonBuilderService {
         if (obj instanceof List) {
             return toList().apply(obj);
         }
-        throw new JsonBuilderTypeNotFoundExceptioin(obj.getClass());
+        throw new JsonBuilderTypeNotFoundException(obj.getClass());
     }
 
     static Function<Object, String> toList() {

@@ -1,8 +1,8 @@
 package com.json.database.core;
 
 import com.json.database.core.test.Employee;
+import com.json.database.core.util.Log;
 
-import java.io.File;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -17,6 +17,7 @@ public enum Database implements DatabaseExecutor {
 
     @Override
     public DatabaseConfiguration<Employee, Long> config() {
+        Log.info("Configuring database...");
         return new DatabaseConfiguration<>() {
             @Override
             public Supplier<Employee> instance() {
