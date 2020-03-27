@@ -125,7 +125,7 @@ public class Log implements Serializable {
                 .append(RESET_BOLD)
                 .append(ANSI_WHITE)
                 .append(BOLD)
-                .append(":\t --- \t")
+                .append(":\t --- \t: ")
                 .append(RESET_BOLD)
                 .append(ANSI_RESET)
                 .append(m);
