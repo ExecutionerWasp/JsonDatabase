@@ -102,9 +102,9 @@ public class Log implements Serializable {
         };
 
         builder
-                .append(ANSI_YELLOW)
+                .append(ANSI_WHITE)
                 .append(LocalDate.now())
-                .append("\t")
+                .append("  |  ")
                 .append(LocalTime.now().withNano(0))
                 .append("\t")
                 .append(ANSI_RESET)
