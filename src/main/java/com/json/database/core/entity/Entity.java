@@ -1,4 +1,4 @@
-package com.json.database.core;
+package com.json.database.core.entity;
 
 import java.io.Serializable;
 

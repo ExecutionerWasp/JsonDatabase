@@ -1,4 +1,6 @@
-package com.json.database.core;
+package com.json.database.core.test;
+
+import com.json.database.core.entity.Entity;
 
 /**
  * @author Alvin

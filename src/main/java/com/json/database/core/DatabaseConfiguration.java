@@ -1,7 +1,8 @@
 package com.json.database.core;
 
+import com.json.database.core.entity.Entity;
+
 import java.io.Serializable;
-import java.nio.file.Path;
 import java.util.function.Supplier;
 
 /**
